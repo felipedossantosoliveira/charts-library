@@ -1,8 +1,8 @@
 <script setup>
-import LineChart from '../lib/LineChart.vue';
-import HelloWorld from './components/HelloWorld.vue'
+import MultiLineChartExample from './examples/MultiLineChartExample.vue';
+
 </script>
 
 <template>
-  <LineChart />
+  <MultiLineChartExample/>
 </template>
