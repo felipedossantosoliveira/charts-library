@@ -1,6 +1,6 @@
-# Vue Graph Library
+# Vue Chart Library
 
-A Vue.js library for creating interactive graphs and charts in Vue.js applications.
+A Vue.js library for creating interactive charts in Vue.js applications.
 
 ## Installation
 
@@ -35,9 +35,9 @@ Use the library in your template:
 </template>
 ```
 
-## Available Graph Types
+## Available Chart Types
 
-The Vue Graph Library supports various types of graphs, including:
+The Vue Chart Library supports various types of charts, including:
 
 - Line Chart
 
