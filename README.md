@@ -1,7 +1,50 @@
-# Vue 3 + Vite
+# Vue Graph Library
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A Vue.js library for creating interactive graphs and charts in Vue.js applications.
 
-## Recommended IDE Setup
+## Installation
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+You can install the library using npm:
+
+```shell
+npm install vue-charts-library
+```
+
+## Usage
+
+Import the library in your Vue.js component:
+
+```javascript
+import LineChart from 'vue-charts-library';
+
+export default {
+  components: {
+    LineChart,
+  },
+  // ...
+};
+```
+
+Use the library in your template:
+
+```html
+<template>
+  <div>
+    <LineChart color="red"></LineChart>
+  </div>
+</template>
+```
+
+## Available Graph Types
+
+The Vue Graph Library supports various types of graphs, including:
+
+- Line Chart
+
+## Documentation
+
+For detailed documentation and examples, please visit the [official documentation](https://charts.felipelabs.com).
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on the [GitHub repository](https://github.com/felipedossantosoliveira/charts-library).
