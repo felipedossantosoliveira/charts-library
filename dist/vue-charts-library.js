@@ -1,46 +1,50 @@
-import { computed as u, ref as z, onMounted as O, onUnmounted as D, reactive as b, openBlock as s, createElementBlock as c, normalizeStyle as L, createElementVNode as l, toDisplayString as i, Fragment as k, renderList as m, withDirectives as J, vShow as q } from "vue";
-const A = (_, w) => {
+import { computed as u, ref as z, onMounted as I, onUnmounted as S, reactive as q, openBlock as s, createElementBlock as c, normalizeStyle as M, createElementVNode as n, toDisplayString as i, Fragment as b, renderList as w, unref as f, withDirectives as D, vShow as P } from "vue";
+const T = (_, x) => {
   const d = _.__vccOpts || _;
-  for (const [v, x] of w)
-    d[v] = x;
+  for (const [v, y] of x)
+    d[v] = y;
   return d;
-}, I = ["viewBox"], N = {
+}, $ = ["viewBox"], A = {
   x: "35",
   y: "30",
   "text-anchor": "end",
   class: "horizontal_text"
-}, P = {
+}, H = {
   x: "35",
   y: "55",
   "text-anchor": "end",
   class: "horizontal_text"
-}, T = {
+}, N = {
   x: "35",
   y: "80",
   "text-anchor": "end",
   class: "horizontal_text"
-}, $ = {
+}, O = {
   x: "35",
   y: "105",
   "text-anchor": "end",
   class: "horizontal_text"
-}, H = {
+}, U = {
   x: "35",
   y: "130",
   "text-anchor": "end",
   class: "horizontal_text"
-}, U = ["x2"], V = ["x2"], W = ["x2"], X = ["x2"], Y = ["x2"], G = ["x"], K = ["x1", "x2"], Q = ["points"], R = ["points"], Z = ["cx", "cy"], ee = ["cx", "cy", "onMouseenter"], te = { class: "tooltip-atribute tooltip-key" }, oe = { class: "tooltip-atribute" }, le = {
+}, V = ["x2"], W = ["x2"], X = ["x2"], Y = ["x2"], G = ["x2"], J = ["x"], K = ["x1", "x2"], Q = ["points"], R = ["points"], Z = ["cx", "cy"], ee = ["cx", "cy", "onMouseenter"], oe = { class: "tooltip-atribute tooltip-key" }, te = { class: "tooltip-atribute" }, re = {
   __name: "LineChart",
   props: {
     color: {
       type: String,
       required: !1,
       default: "red"
+    },
+    data: {
+      type: Array,
+      required: !0
     }
   },
   setup(_) {
-    const w = _, d = u(() => {
-      switch (w.color) {
+    const x = _, d = u(() => {
+      switch (x.color) {
         case "amber":
           return {
             op200: "#fde68a",
@@ -49,7 +53,7 @@ const A = (_, w) => {
           };
         case "blue":
           return {
-            op200: "#bfcbea",
+            op200: "#bfdbff",
             op300: "#93c5fd",
             op500: "#3b82f6"
           };
@@ -131,78 +135,94 @@ const A = (_, w) => {
             op300: "#fda4af",
             op500: "#f43f5e"
           };
+        case "sky":
+          return {
+            op200: "#bae6fd",
+            op300: "#7dd3fc",
+            op500: "#0ea5e9"
+          };
+        case "slate":
+          return {
+            op200: "#e2e8f0",
+            op300: "#cbd5e1",
+            op500: "#64748b"
+          };
+        case "stone":
+          return {
+            op200: "#e7e5e4",
+            op300: "#d6d3d1",
+            op500: "#78716c"
+          };
+        case "teal":
+          return {
+            op200: "#99f6e4",
+            op300: "#5eead4",
+            op500: "#14b8a6"
+          };
+        case "violet":
+          return {
+            op200: "#ddd6fe",
+            op300: "#c4b5fd",
+            op500: "#8b5cf6"
+          };
+        case "yellow":
+          return {
+            op200: "#fef08a",
+            op300: "#fde047",
+            op500: "#e6b308"
+          };
+        case "zinc":
+          return {
+            op200: "#e4e4e7",
+            op300: "#d4d4d8",
+            op500: "#717179"
+          };
         default:
           return {
-            200: "#fed7aa",
-            300: "#fdba74",
-            500: "#f97316"
+            op200: "#fed7aa",
+            op300: "#fdba74",
+            op500: "#f97316"
           };
       }
-    }), v = z(0), x = z(0);
+    }), v = z(0), y = z(0);
     function C(e) {
-      v.value = e.pageX, x.value = e.pageY;
+      v.value = e.pageX, y.value = e.pageY;
     }
-    O(() => window.addEventListener("mousemove", C)), D(() => window.removeEventListener("mousemove", C));
-    function F(e, a, t) {
-      n.value = !0, n.data.key = e, n.data.value = a, n.data.index = t;
+    I(() => window.addEventListener("mousemove", C)), S(() => window.removeEventListener("mousemove", C));
+    function L(e, l, o) {
+      a.value = !0, a.data.key = e, a.data.value = l.toFixed(4), a.data.index = o;
     }
-    function S() {
-      n.value = !1, n.data.key = "", n.data.value = "", n.data.index = null;
+    function F() {
+      a.value = !1, a.data.key = "", a.data.value = "", a.data.index = null;
     }
-    const n = b({
+    const a = q({
       value: !1,
       data: {
         key: "",
-        value: "",
+        value: 0,
         index: null
       }
-    }), M = b([
-      { key: "Jan" },
-      { key: "Fev" },
-      { key: "Mar" },
-      { key: "Abr" },
-      { key: "Mai" },
-      { key: "Jun" },
-      { key: "Jul" },
-      { key: "Ago" },
-      { key: "Set" },
-      { key: "Out" },
-      { key: "Nov" },
-      { key: "Dez" }
-    ]), r = b([
-      { value: 1093 },
-      { value: 1068 },
-      { value: 1127 },
-      { value: 1072 },
-      { value: 1105 },
-      { value: 1100 },
-      { value: 1138 },
-      { value: 1074 },
-      { value: 1051 },
-      { value: 1086 },
-      { value: 1129 },
-      { value: 1120 }
-    ]);
+    }), t = x.data;
     u(() => window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    const p = u(() => Math.max(...r.map((e) => e.value))), y = u(() => Math.min(...r.map((e) => e.value)));
-    function f(e) {
-      let a = e - y.value, t = p.value - y.value;
-      return (100 - a * 100 / t + 30).toFixed(2);
+    const p = u(() => Math.max(...t.map((e) => e.value))), k = u(() => Math.min(...t.map((e) => e.value)));
+    function m(e) {
+      let l = e - k.value, o = p.value - k.value;
+      return (100 - l * 100 / o + 30).toFixed(2);
     }
-    const g = u(() => (p.value - y.value) / 4), j = u(() => {
+    const g = u(() => (p.value - k.value) / 4), j = u(() => {
       let e = [];
-      for (let a = 0; a < r.length; a++)
-        e.push(a * 40 + 40), e.push(f(r[a].value));
+      for (let l = 0; l < t.length; l++)
+        e.push(l * 40 + 40), e.push(m(t[l].value));
       return e.join(" ");
     }), B = u(() => {
       let e = [40, 130];
-      for (let t = 0; t < r.length; t++)
-        e.push(t * 40 + 40), e.push(f(r[t].value));
-      let a = r.length * 40;
-      return e.push(a, 130), e.join(" ");
-    }), E = u(() => `0 0 ${r.length * 40 + 30} 150`), h = u(() => r.length * 40);
-    return (e, a) => (s(), c("div", {
-      style: L({
+      for (let o = 0; o < t.length; o++)
+        e.push(o * 40 + 40), e.push(m(t[o].value));
+      let l = t.length * 40;
+      return e.push(l, 130), e.join(" ");
+    }), E = u(() => `0 0 ${t.length * 40 + 30} 150`), h = u(() => t.length * 40);
+    return (e, l) => (s(), c("div", {
+      style: M({
         "--color": d.value.op500,
         "--color-200": d.value.op200,
         "--color-300": d.value.op300
@@ -213,12 +233,12 @@ const A = (_, w) => {
         viewBox: E.value,
         xmlns: "http://www.w3.org/2000/svg"
       }, [
-        l("text", N, i(p.value), 1),
-        l("text", P, i((p.value - g.value).toFixed(0)), 1),
-        l("text", T, i((p.value - g.value * 2).toFixed(0)), 1),
-        l("text", $, i((p.value - g.value * 3).toFixed(0)), 1),
-        l("text", H, i(y.value), 1),
-        l("line", {
+        n("text", A, i(p.value), 1),
+        n("text", H, i((p.value - g.value).toFixed(0)), 1),
+        n("text", N, i((p.value - g.value * 2).toFixed(0)), 1),
+        n("text", O, i((p.value - g.value * 3).toFixed(0)), 1),
+        n("text", U, i(k.value), 1),
+        n("line", {
           class: "line_color",
           x1: "40",
           y1: "30",
@@ -226,8 +246,8 @@ const A = (_, w) => {
           y2: "30",
           stroke: "currentColor",
           "stroke-width": "0.4"
-        }, null, 8, U),
-        l("line", {
+        }, null, 8, V),
+        n("line", {
           class: "line_color",
           x1: "40",
           y1: "55",
@@ -235,8 +255,8 @@ const A = (_, w) => {
           y2: "55",
           stroke: "currentColor",
           "stroke-width": "0.4"
-        }, null, 8, V),
-        l("line", {
+        }, null, 8, W),
+        n("line", {
           class: "line_color",
           x1: "40",
           y1: "80",
@@ -244,8 +264,8 @@ const A = (_, w) => {
           y2: "80",
           stroke: "currentColor",
           "stroke-width": "0.4"
-        }, null, 8, W),
-        l("line", {
+        }, null, 8, X),
+        n("line", {
           class: "line_color",
           x1: "40",
           y1: "105",
@@ -253,8 +273,8 @@ const A = (_, w) => {
           y2: "105",
           stroke: "currentColor",
           "stroke-width": "0.4"
-        }, null, 8, X),
-        l("line", {
+        }, null, 8, Y),
+        n("line", {
           class: "line_color",
           x1: "40",
           y1: "130",
@@ -262,32 +282,32 @@ const A = (_, w) => {
           y2: "130",
           stroke: "currentColor",
           "stroke-width": "0.4"
-        }, null, 8, Y),
-        (s(!0), c(k, null, m(M, (t, o) => (s(), c("text", {
-          key: o,
-          x: o * 40 + 40,
+        }, null, 8, G),
+        (s(!0), c(b, null, w(f(t), (o, r) => (s(), c("text", {
+          key: r,
+          x: r * 40 + 40,
           y: "145",
           "text-anchor": "middle"
-        }, i(t.key), 9, G))), 128)),
-        (s(!0), c(k, null, m(r, (t, o) => (s(), c("line", {
-          key: o,
-          x1: o * 40 + 40,
+        }, i(o.key), 9, J))), 128)),
+        (s(!0), c(b, null, w(f(t), (o, r) => (s(), c("line", {
+          key: r,
+          x1: r * 40 + 40,
           y1: "30",
-          x2: o * 40 + 40,
+          x2: r * 40 + 40,
           y2: "130",
           stroke: "currentColor",
           "stroke-dasharray": "2,5",
           class: "line_color",
           "stroke-width": "0.5"
         }, null, 8, K))), 128)),
-        l("polygon", {
+        n("polygon", {
           points: B.value,
           class: "polygon",
           stroke: "currentColor",
           "stroke-width": "0",
           "stroke-linejoin": "round"
         }, null, 8, Q),
-        l("polyline", {
+        n("polyline", {
           points: j.value,
           stroke: "currentColor",
           "stroke-width": "1.5",
@@ -295,40 +315,40 @@ const A = (_, w) => {
           fill: "none",
           "stroke-linejoin": "round"
         }, null, 8, R),
-        (s(!0), c(k, null, m(r, (t, o) => (s(), c("circle", {
-          key: o,
-          cx: o * 40 + 40,
-          cy: f(t.value),
+        (s(!0), c(b, null, w(f(t), (o, r) => (s(), c("circle", {
+          key: r,
+          cx: r * 40 + 40,
+          cy: m(o.value),
           r: "2.5",
           fill: "currentColor"
         }, null, 8, Z))), 128)),
-        (s(!0), c(k, null, m(r, (t, o) => (s(), c("circle", {
-          key: o,
-          cx: o * 40 + 40,
-          cy: f(t.value),
+        (s(!0), c(b, null, w(f(t), (o, r) => (s(), c("circle", {
+          key: r,
+          cx: r * 40 + 40,
+          cy: m(o.value),
           r: "7",
           class: "circle",
-          onMouseenter: (re) => F(M[o].key, t.value, o),
-          onMouseleave: S
+          onMouseenter: (ne) => L(f(t)[r].key, o.value, r),
+          onMouseleave: F
         }, null, 40, ee))), 128))
-      ], 8, I)),
-      J(l("div", {
-        style: L({
-          "--x": (n.data.index + 1 > r.length / 2 ? v.value - 150 : v.value) + "px",
-          "--y": x.value - 75 + "px",
+      ], 8, $)),
+      D(n("div", {
+        style: M({
+          "--x": (a.data.index + 1 > f(t).length / 2 ? v.value - 150 : v.value) + "px",
+          "--y": y.value - 75 + "px",
           "--color-200-20": d.value.op200 + "20"
         }),
         class: "tooltip"
       }, [
-        l("div", te, i(n.data.key), 1),
-        l("div", oe, i(n.data.value), 1)
+        n("div", oe, i(a.data.key), 1),
+        n("div", te, i(a.data.value), 1)
       ], 4), [
-        [q, n.value]
+        [P, a.value]
       ])
     ], 4));
   }
-}, ae = /* @__PURE__ */ A(le, [["__scopeId", "data-v-9c41210e"]]);
+}, le = /* @__PURE__ */ T(re, [["__scopeId", "data-v-042fba4a"]]);
 require("./style.css");
 export {
-  ae as LineChart
+  le as LineChart
 };
