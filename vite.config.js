@@ -8,9 +8,9 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/components/main.js'),
-      name: 'ChartsLibrary',
+      name: 'VueChartsLibrary',
       // the proper extensions will be added
-      fileName: 'charts-library',
+      fileName: 'vue-charts-library',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

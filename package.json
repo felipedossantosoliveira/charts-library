@@ -1,14 +1,14 @@
 {
-  "name": "charts-library",
+  "name": "vue-charts-library",
   "version": "0.0.1",
   "type": "module",
   "files": ["dist"],
-  "main": "./dist/charts-library.umd.cjs",
-  "module": "./dist/charts-library.js",
+  "main": "./dist/vue-charts-library.umd.cjs",
+  "module": "./dist/vue-charts-library.js",
   "exports": {
     ".": {
-      "import": "./dist/charts-library.js",
-      "require": "./dist/charts-library.umd.cjs"
+      "import": "./dist/vue-charts-library.js",
+      "require": "./dist/vue-charts-library.umd.cjs"
     },
     "./style.css": "./dist/style.css"
   },
