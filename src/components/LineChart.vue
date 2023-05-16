@@ -7,6 +7,10 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'red'
+  },
+  data: {
+    type: Array,
+    required: true
   }
 })
 
@@ -16,97 +20,139 @@ const colorHex = computed(() => {
       return {
         op200: '#fde68a',
         op300: '#fcd34d',
-        op500: '#f59e0b',
+        op500: '#f59e0b'
       };
     case 'blue':
       return {
-        op200: '#bfcbea',
+        op200: '#bfdbff',
         op300: '#93c5fd',
-        op500: '#3b82f6',
+        op500: '#3b82f6'
       };
     case 'cyan':
       return {
         op200: '#a5f3fc',
         op300: '#67e8f9',
-        op500: '#06b6d4',
+        op500: '#06b6d4'
       };
     case 'emerald':
       return {
         op200: '#a7f3d0',
         op300: '#6ee7b7',
-        op500: '#10b981',
+        op500: '#10b981'
       };
     case 'fuchsia':
       return {
         op200: '#f5d0fe',
         op300: '#f0abfc',
-        op500: '#d946ef',
+        op500: '#d946ef'
       };
     case 'gray':
       return {
         op200: '#e5e7eb',
         op300: '#d1d5db',
-        op500: '#6b7280',
+        op500: '#6b7280'
       };
     case 'green':
       return {
         op200: '#bbf7d0',
         op300: '#86efac',
-        op500: '#22c55e',
+        op500: '#22c55e'
       };
     case 'indigo':
       return {
         op200: '#c7d2fe',
         op300: '#a5b4fc',
-        op500: '#6366f1',
+        op500: '#6366f1'
       };
     case 'lime':
       return {
         op200: '#d9f99d',
         op300: '#bee264',
-        op500: '#84cc16',
+        op500: '#84cc16'
       };
     case 'neutral':
       return {
         op200: '#e5e5e5',
         op300: '#d4d4d4',
-        op500: '#737373',
+        op500: '#737373'
       };
     case 'orange':
       return {
         op200: '#fed7aa',
         op300: '#fdba74',
-        op500: '#f97316',
+        op500: '#f97316'
       };
     case 'pink':
       return {
         op200: '#fbcfe8',
         op300: '#f9a8d4',
-        op500: '#ec4899',
+        op500: '#ec4899'
       };
     case 'purple':
       return {
         op200: '#e9d5ff',
         op300: '#d8b4fe',
-        op500: '#a855f7',
+        op500: '#a855f7'
       };
     case 'red':
       return {
         op200: '#fecaca',
         op300: '#fca5a5',
-        op500: '#ef4444',
+        op500: '#ef4444'
       };
     case 'rose':
       return {
         op200: '#fecdd3',
         op300: '#fda4af',
-        op500: '#f43f5e',
+        op500: '#f43f5e'
+      };
+    case 'sky':
+      return {
+        op200: '#bae6fd',
+        op300: '#7dd3fc',
+        op500: '#0ea5e9'
+      };
+    case 'slate':
+      return {
+        op200: '#e2e8f0',
+        op300: '#cbd5e1',
+        op500: '#64748b'
+      };
+    case 'stone':
+      return {
+        op200: '#e7e5e4',
+        op300: '#d6d3d1',
+        op500: '#78716c'
+      };
+    case 'teal':
+      return {
+        op200: '#99f6e4',
+        op300: '#5eead4',
+        op500: '#14b8a6'
+      };
+    case 'violet':
+      return {
+        op200: '#ddd6fe',
+        op300: '#c4b5fd',
+        op500: '#8b5cf6'
+      };
+    case 'yellow':
+      return {
+        op200: '#fef08a',
+        op300: '#fde047',
+        op500: '#e6b308'
+      };
+    case 'zinc':
+      return {
+        op200: '#e4e4e7',
+        op300: '#d4d4d8',
+        op500: '#717179'
       };
     default:
       return {
-        200: '#fed7aa',
-        300: '#fdba74',
-        500: '#f97316',
+        op200: '#fed7aa',
+        op300: '#fdba74',
+        op500: '#f97316',
       };
   }
 })
@@ -126,7 +172,7 @@ onUnmounted(() => window.removeEventListener('mousemove', update))
 function showTooltip(key, value, index){
   show.value = true
   show.data.key = key
-  show.data.value = value
+  show.data.value = value.toFixed(4)
   show.data.index = index
 }
 
@@ -141,92 +187,63 @@ const show = reactive({
   value: false,
   data: {
     key: '',
-    value: '',
+    value: 0,
     index: null
   }
 })
 
-
-const keys = reactive([
-  { key: 'Jan'},
-  { key: 'Fev'},
-  { key: 'Mar'},
-  { key: 'Abr'},
-  { key: 'Mai'},
-  { key: 'Jun'},
-  { key: 'Jul'},
-  { key: 'Ago'},
-  { key: 'Set'},
-  { key: 'Out'},
-  { key: 'Nov'},
-  { key: 'Dez'}
-])
-
-const orders = reactive([
-  { value: 1093},
-  { value: 1068},
-  { value: 1127},
-  { value: 1072},
-  { value: 1105},
-  { value: 1100},
-  { value: 1138},
-  { value: 1074},
-  { value: 1051},
-  { value: 1086},
-  { value: 1129},
-  { value: 1120},
-]);
+const items = props.data
 
 const darkmode = computed(() => {
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 })
 
 //Chart setup
-const maxOrders = computed(() => {
-  return Math.max(...orders.map((order) => order.value));
+const maxItems = computed(() => {
+  return Math.max(...items.map((item) => item.value));
 });
 
-const minOrders = computed(() => {
-  return Math.min(...orders.map((order) => order.value));
+const minItems = computed(() => {
+  return Math.min(...items.map((item) => item.value));
 });
 
 function calculatePercentageInverted(value) {
-  let val = value - minOrders.value;
-  let max = maxOrders.value - minOrders.value;
+  let val = value - minItems.value;
+  let max = maxItems.value - minItems.value;
   let result = (100 - ((val * 100) / max))+30;
   return result.toFixed(2);
 }
 
 const interval = computed(() => {
-  return (maxOrders.value - minOrders.value) / 4;
+  return (maxItems.value - minItems.value) / 4;
 });
 
 const points = computed(() => {
   let points = []
-  for (let i=0; i < orders.length; i++){
+  for (let i=0; i < items.length; i++){
     points.push((i*40)+40);
-    points.push(calculatePercentageInverted(orders[i].value))
+    points.push(calculatePercentageInverted(items[i].value))
   }
   return points.join(' ')
 });
 
 const pointsPolygon = computed(() => {
   let points = [40, 130]
-  for (let i=0; i < orders.length; i++){
+  for (let i=0; i < items.length; i++){
     points.push((i*40)+40);
-    points.push(calculatePercentageInverted(orders[i].value))
+    points.push(calculatePercentageInverted(items[i].value))
   }
-  let final = orders.length * 40
+  let final = items.length * 40
   points.push(final, 130);
   return points.join(' ')
 });
 
 const viewbox = computed(() => {
-  return `0 0 ${orders.length * 40 + 30} 150`
+  return `0 0 ${items.length * 40 + 30} 150`
 });
 
 const horizontalLinesWidth = computed(() => {
-  return orders.length * 40
+  return items.length * 40
 });
 </script>
 <template>
@@ -243,19 +260,19 @@ const horizontalLinesWidth = computed(() => {
     >
       <!--   Valores das divisões horizontais || Values of horizontal divisions   -->
       <text x="35" y="30" text-anchor="end" class="horizontal_text">
-        {{ maxOrders }}
+        {{ maxItems }}
       </text>
       <text x="35" y="55" text-anchor="end" class="horizontal_text">
-        {{ (maxOrders - interval).toFixed(0) }}
+        {{ (maxItems - interval).toFixed(0) }}
       </text>
       <text x="35" y="80" text-anchor="end" class="horizontal_text">
-        {{ (maxOrders - interval * 2).toFixed(0) }}
+        {{ (maxItems - interval * 2).toFixed(0) }}
       </text>
       <text x="35" y="105" text-anchor="end" class="horizontal_text">
-        {{ (maxOrders - interval * 3).toFixed(0) }}
+        {{ (maxItems - interval * 3).toFixed(0) }}
       </text>
       <text x="35" y="130" text-anchor="end" class="horizontal_text">
-        {{ minOrders }}
+        {{ minItems }}
       </text>
 
       <!--   Linhas horizontais || Horizontal lines   -->
@@ -307,7 +324,7 @@ const horizontalLinesWidth = computed(() => {
 
       <!--   Valores das divisões verticais || Values of vertical divisions   -->
       <text
-        v-for="(key, index) in keys"
+        v-for="(key, index) in items"
         :key="index"
         :x="index * 40 + 40"
         y="145"
@@ -318,7 +335,7 @@ const horizontalLinesWidth = computed(() => {
 
       <!--   Linhas verticais || Vertical lines   -->
       <line
-        v-for="(order, index) in orders"
+        v-for="(item, index) in items"
         :key="index"
         :x1="index * 40 + 40"
         y1="30"
@@ -349,28 +366,28 @@ const horizontalLinesWidth = computed(() => {
 
       <!--   Pontos do gráfico || Points of chart    -->
       <circle
-        v-for="(order, index) in orders"
+        v-for="(item, index) in items"
         :key="index"
         :cx="index * 40 + 40"
-        :cy="calculatePercentageInverted(order.value)"
+        :cy="calculatePercentageInverted(item.value)"
         r="2.5"
         fill="currentColor"
       />
 
       <circle
-        v-for="(order, index) in orders"
+        v-for="(item, index) in items"
         :key="index"
         :cx="index * 40 + 40"
-        :cy="calculatePercentageInverted(order.value)"
+        :cy="calculatePercentageInverted(item.value)"
         r="7"
         class="circle"
-        @mouseenter="showTooltip(keys[index].key, order.value, index)"
+        @mouseenter="showTooltip(items[index].key, item.value, index)"
         @mouseleave="hideTooltip"
       />
     </svg>
     <div
       :style="{
-        '--x': (show.data.index + 1 > orders.length / 2 ? x - 150 : x) + 'px',
+        '--x': (show.data.index + 1 > items.length / 2 ? x - 150 : x) + 'px',
         '--y': y - 75 + 'px',
         '--color-200-20': colorHex.op200 + '20'
       }"
@@ -436,6 +453,7 @@ const horizontalLinesWidth = computed(() => {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	border-left-width: 8px;
+  border-left-style: solid;
 	border-color: var(--color);
 	padding: 0.25rem 0.75rem;
   }
