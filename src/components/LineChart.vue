@@ -194,10 +194,6 @@ const show = reactive({
 
 const items = props.data
 
-const darkmode = computed(() => {
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-})
-
 //Chart setup
 const maxItems = computed(() => {
   return Math.max(...items.map((item) => item.value));
