@@ -20,6 +20,7 @@ import LineChart from 'vue-charts-library';
 export default {
   components: {
     LineChart,
+    MultiLineChart
   },
   // ...
 };
