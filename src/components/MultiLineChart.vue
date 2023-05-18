@@ -3,11 +3,6 @@ import { reactive, computed, onMounted, onUnmounted, ref } from "vue";
 import "./style.css";
 
 const props = defineProps({
-  color: {
-    type: String,
-    required: false,
-    default: "red",
-  },
   keys: {
     type: Array,
     required: true,
