@@ -98,5 +98,5 @@ const multiItems= reactive([
 
 </script>
 <template>
-  <BarsChart :data="multiItems" :keys="keys" theme="dark" />
+  <BarsChart :data="multiItems" :keys="keys" theme="dark" min-width="1200px" />
 </template>

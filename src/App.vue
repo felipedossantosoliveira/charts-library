@@ -11,7 +11,7 @@ function switchTheme(){
 }
 
 const backgroundColor = computed(() => {
-  return theme.value === 'dark' ? '#18181b' : '#fff'
+  return theme.value === 'dark' ? '#0f172a' : '#fff'
 })
 
 </script>

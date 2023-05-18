@@ -203,13 +203,6 @@ const items = props.data;
 
 const itemsp = props.data;
 
-const darkmode = computed(() => {
-  return (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  );
-});
-
 //Chart setup
 const maxItems = computed(() => {
   let values = [];
