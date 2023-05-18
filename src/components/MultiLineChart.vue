@@ -12,7 +12,7 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  datatwo: {
+  data: {
     type: Array,
     required: false,
   },
@@ -206,7 +206,7 @@ const show = reactive({
 
 const items = props.data;
 
-const itemsp = props.datatwo;
+const itemsp = props.data;
 
 const darkmode = computed(() => {
   return (
@@ -265,6 +265,19 @@ const pointsp = computed(() => {
   });
   return multiPoints;
 });
+const pointsAnimate = computed(() => {
+  let multiPoints = [];
+  let points = [];
+  itemsp.forEach((item) => {
+    for (let i = 0; i < item.data.length; i++) {
+      points.push(i * 40 + 40);
+      points.push(80);
+    }
+    multiPoints.push({ points: points.join(" ") });
+    points = [];
+  });
+  return multiPoints;
+});
 
 const pointsPolygonp = computed(() => {
   let multiPoints = [];
@@ -277,6 +290,22 @@ const pointsPolygonp = computed(() => {
     let final = item.data.length * 40;
     points.push(final, 130);
     multiPoints.push({ points: points.join(" "), color: colorHex(item.color) });
+    points = [40, 130];
+  });
+  return multiPoints;
+});
+
+const pointsPolygonAnimate = computed(() => {
+  let multiPoints = [];
+  let points = [40, 130];
+  itemsp.forEach((item) => {
+    for (let i = 0; i < item.data.length; i++) {
+      points.push(i * 40 + 40);
+      points.push(80);
+    }
+    let final = item.data.length * 40;
+    points.push(final, 130);
+    multiPoints.push({ points: points.join(" ")});
     points = [40, 130];
   });
   return multiPoints;
@@ -424,7 +453,9 @@ const horizontalLinesWidth = computed(() => {
           stroke="currentColor"
           stroke-width="0"
           stroke-linejoin="round"
-        />
+        >
+          <animate attributeName="points" dur="0.3s" repeatCount="1" :values="pointsPolygonAnimate[1].points + ';' + pointsPolygon.points" keyTimes="0; 1" />
+        </polygon>
       </g>
       <g v-for="(points, index) in pointsp">
         <polyline
@@ -436,7 +467,9 @@ const horizontalLinesWidth = computed(() => {
           stroke-linecap="round"
           fill="none"
           stroke-linejoin="round"
-        />
+        >
+          <animate attributeName="points" dur="0.3s" repeatCount="1" :values="pointsAnimate[1].points + ';' + points.points" keyTimes="0; 1" />
+        </polyline>
       </g>
 
       <!--   Pontos do gráfico || Points of chart    -->
@@ -449,7 +482,9 @@ const horizontalLinesWidth = computed(() => {
           :cy="calculatePercentageInverted(point.value)"
           r="2.5"
           fill="currentColor"
-        />
+        >
+          <animate attributeName="cy" dur="0.3s" repeatCount="1" :values="'80' + ';' + calculatePercentageInverted(point.value)" keyTimes="0; 1" />
+        </circle>
       </g>
 
       <g v-for="(item, index) in itemsp" :key="index">
@@ -464,10 +499,13 @@ const horizontalLinesWidth = computed(() => {
           class="circle"
           @mouseenter="showTooltip(keys[indexp].value, point.value, indexp, index)"
           @mouseleave="hideTooltip"
-        />
+        >
+          <animate attributeName="cy" dur="0.3s" repeatCount="1" :values="'80' + ';' + calculatePercentageInverted(point.value)" keyTimes="0; 1" />
+        </circle>
       </g>
     </svg>
 
+<!--    Tooltip-->
     <div
       :style="{
         '--x':
@@ -489,6 +527,8 @@ const horizontalLinesWidth = computed(() => {
       </div>
     </div>
   </div>
+
+<!--  Data selector-->
   <div class="items-check-container">
     <div v-for="(item, index) in itemsp" :key="index">
       <button

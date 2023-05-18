@@ -100,5 +100,5 @@ const multiItems= reactive([
 </script>
 
 <template>
-  <MultiLineChart :keys="keys" :datatwo="multiItems" color="green" theme="dark" />
+  <MultiLineChart :keys="keys" :data="multiItems" color="green" theme="dark" />
 </template>
