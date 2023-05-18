@@ -11,7 +11,12 @@ const props = defineProps({
   data: {
     type: Array,
     required: true
-  }
+  },
+  theme: {
+    type: String,
+    required: false,
+    default: "light",
+  },
 })
 
 const colorHex = computed(() => {
@@ -223,11 +228,31 @@ const points = computed(() => {
   return points.join(' ')
 });
 
+const pointsAnimate = computed(() => {
+  let points = []
+  for (let i=0; i < items.length; i++){
+    points.push((i*40)+40);
+    points.push(80)
+  }
+  return points.join(' ')
+});
+
 const pointsPolygon = computed(() => {
   let points = [40, 130]
   for (let i=0; i < items.length; i++){
     points.push((i*40)+40);
     points.push(calculatePercentageInverted(items[i].value))
+  }
+  let final = items.length * 40
+  points.push(final, 130);
+  return points.join(' ')
+});
+
+const pointsPolygonAnimate = computed(() => {
+  let points = [40, 130]
+  for (let i=0; i < items.length; i++){
+    points.push((i*40)+40);
+    points.push(80)
   }
   let final = items.length * 40
   points.push(final, 130);
@@ -255,19 +280,19 @@ const horizontalLinesWidth = computed(() => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <!--   Valores das divisões horizontais || Values of horizontal divisions   -->
-      <text x="35" y="30" text-anchor="end" class="horizontal_text">
+      <text :style="'fill: ' + (props.theme === 'dark' ? '#ffffff' : '#000000')" x="35" y="30" text-anchor="end" class="horizontal_text">
         {{ maxItems }}
       </text>
-      <text x="35" y="55" text-anchor="end" class="horizontal_text">
+      <text :style="'fill: ' + (props.theme === 'dark' ? '#ffffff' : '#000000')" x="35" y="55" text-anchor="end" class="horizontal_text">
         {{ (maxItems - interval).toFixed(0) }}
       </text>
-      <text x="35" y="80" text-anchor="end" class="horizontal_text">
+      <text :style="'fill: ' + (props.theme === 'dark' ? '#ffffff' : '#000000')" x="35" y="80" text-anchor="end" class="horizontal_text">
         {{ (maxItems - interval * 2).toFixed(0) }}
       </text>
-      <text x="35" y="105" text-anchor="end" class="horizontal_text">
+      <text :style="'fill: ' + (props.theme === 'dark' ? '#ffffff' : '#000000')" x="35" y="105" text-anchor="end" class="horizontal_text">
         {{ (maxItems - interval * 3).toFixed(0) }}
       </text>
-      <text x="35" y="130" text-anchor="end" class="horizontal_text">
+      <text :style="'fill: ' + (props.theme === 'dark' ? '#ffffff' : '#000000')" x="35" y="130" text-anchor="end" class="horizontal_text">
         {{ minItems }}
       </text>
 
@@ -320,6 +345,7 @@ const horizontalLinesWidth = computed(() => {
 
       <!--   Valores das divisões verticais || Values of vertical divisions   -->
       <text
+          :style="'fill: ' + (props.theme === 'dark' ? '#ffffff' : '#000000')"
         v-for="(key, index) in items"
         :key="index"
         :x="index * 40 + 40"
@@ -345,20 +371,24 @@ const horizontalLinesWidth = computed(() => {
 
       <!--   Linha do gráfico || Line of chart    -->
       <polygon
-        :points="pointsPolygon"
         class="polygon"
         stroke="currentColor"
+        :points="pointsPolygon"
         stroke-width="0"
         stroke-linejoin="round"
-      />
+      >
+        <animate attributeName="points" dur="0.3s" repeatCount="1" :values="pointsPolygonAnimate + ';' + pointsPolygon" keyTimes="0; 1" />
+      </polygon>
       <polyline
-        :points="points"
         stroke="currentColor"
         stroke-width="1.5"
+        :points="points"
         stroke-linecap="round"
         fill="none"
         stroke-linejoin="round"
-      />
+      >
+        <animate attributeName="points" dur="0.3s" repeatCount="1" :values="pointsAnimate + ';' + points" keyTimes="0; 1" />
+      </polyline>
 
       <!--   Pontos do gráfico || Points of chart    -->
       <circle
@@ -368,7 +398,9 @@ const horizontalLinesWidth = computed(() => {
         :cy="calculatePercentageInverted(item.value)"
         r="2.5"
         fill="currentColor"
-      />
+      >
+      <animate attributeName="cy" dur="0.3s" repeatCount="1" :values="'80' + ';' + calculatePercentageInverted(item.value)" keyTimes="0; 1" />
+      </circle>
 
       <circle
         v-for="(item, index) in items"
@@ -379,13 +411,15 @@ const horizontalLinesWidth = computed(() => {
         class="circle"
         @mouseenter="showTooltip(items[index].key, item.value, index)"
         @mouseleave="hideTooltip"
-      />
+      >
+        <animate attributeName="cy" dur="0.3s" repeatCount="1" :values="'80' + ';' + calculatePercentageInverted(item.value)" keyTimes="0;1" />
+      </circle>
     </svg>
     <div
       :style="{
         '--x': (show.data.index + 1 > items.length / 2 ? x - 150 : x) + 'px',
         '--y': y - 75 + 'px',
-        '--color-200-20': colorHex.op200 + '20'
+        '--color-200-20': colorHex.op300 + '70'
       }"
       class="tooltip"
       v-show="show.value"

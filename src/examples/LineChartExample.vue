@@ -19,5 +19,5 @@ const items = reactive([
 </script>
 
 <template>
-  <LineChart :data="items" color="green" />
+  <LineChart :data="items" color="green" theme="dark" />
 </template>
