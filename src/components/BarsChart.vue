@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import {ref, computed, reactive, onMounted, onUnmounted} from "vue";
 
 const props = defineProps({
   keys: {
@@ -165,6 +165,43 @@ function colorHex(color) {
   }
 }
 
+const x = ref(0);
+const y = ref(0);
+
+function update(event) {
+  x.value = event.pageX;
+  y.value = event.pageY;
+}
+
+onMounted(() => window.addEventListener("mousemove", update));
+onUnmounted(() => window.removeEventListener("mousemove", update));
+
+
+const atualItem = reactive({
+  show: false,
+  key: '',
+  value: 0,
+  index: null,
+  barIndex: null,
+});
+
+function onClick(bar, index, barIndex) {
+  atualItem.show = true;
+  atualItem.key = props.keys[index].value;
+  atualItem.value = props.data[barIndex].data[index].value;
+  atualItem.barIndex = barIndex;
+  atualItem.index = index;
+  console.log(bar)
+}
+
+function onMouseLeave() {
+  atualItem.show = false;
+  atualItem.key = '';
+  atualItem.value = 0;
+  atualItem.index = null;
+  atualItem.barIndex = null;
+}
+
 const maxItems = computed(() => {
   let values = [];
   props.data.forEach((item) => {
@@ -181,28 +218,40 @@ const minItems = computed(() => {
   return Math.min(...values);
 });
 
+const interval = computed(() => {
+  return (maxItems.value - minItems.value) / 4;
+});
+
 function calculatePercentage(value) {
   let val = value - minItems.value;
   let max = maxItems.value - minItems.value;
   let result = ((val * 100) / max) * 0.9 + 10;
   return result.toFixed(2);
 }
+
 </script>
 <template>
-  <div class="all" >
-    <div class="container" :style="minWidth != null ? 'min-width:' + minWidth : ''">
+  <div class="all">
+    <div
+      class="container"
+      :style="minWidth != null ? 'min-width:' + minWidth : ''"
+    >
       <div
         class="interval-container"
         :style="props.theme === 'dark' ? 'color: #fff' : 'color: #000'"
       >
-        <div>
-          {{ maxItems }}
+        <div class="interval">
+          <div>
+            {{ maxItems }}
+          </div>
+          <div v-for="value in 3">
+            {{ (maxItems - interval * value).toFixed(0) }}
+          </div>
+          <div>
+            {{ minItems }}
+          </div>
         </div>
-        <div v-for="interval in 3">121134</div>
-        <div>
-          {{ minItems }}
-        </div>
-        <div>0</div>
+        <div class="zero">0</div>
       </div>
       <div class="chart-container">
         <div class="lines-container">
@@ -221,7 +270,20 @@ function calculatePercentage(value) {
               </div>
               <div
                 class="line"
-                v-for="line in 4"
+                v-for="line in 3"
+                :style="{
+                  'grid-template-columns': 'repeat(' + keys.length + ', 1fr)',
+                }"
+              >
+                <div
+                  class="vertical-line"
+                  v-for="(verticalLine, index) in keys"
+                ></div>
+              </div>
+            </div>
+            <div class="last-line-container">
+              <div
+                class="line"
                 :style="{
                   'grid-template-columns': 'repeat(' + keys.length + ', 1fr)',
                 }"
@@ -239,14 +301,22 @@ function calculatePercentage(value) {
             <div class="bar-container-top">
               <div
                 class="bar-top"
-                v-for="bar in data"
+                v-for="(bar, bar_index) in data"
+                @click="onClick(bar, index, bar_index)"
+                @mouseleave="onMouseLeave()"
                 :style="{
-                  'background-color': colorHex(bar.color).op500,
+                  'background-color':
+                    atualItem.barIndex === bar_index &&
+                    atualItem.index === index
+                      ? colorHex(bar.color).op500
+                      : atualItem.index !== null
+                      ? colorHex(bar.color).op500 + '20'
+                      : colorHex(bar.color).op500,
                   height: calculatePercentage(bar.data[index].value) + '%',
+                  cursor: 'pointer',
+                  width: bar.checked ? '100%' : '0%',
                 }"
-              >
-
-              </div>
+              ></div>
             </div>
           </div>
         </div>
@@ -263,38 +333,67 @@ function calculatePercentage(value) {
       </div>
     </div>
   </div>
-    <div class="items-check-container">
-      <div v-for="(item, index) in props.data" :key="index">
-        <button
-            @click="item.checked = !item.checked"
-            :style="{'border-left-color':  colorHex(item.color).op500, 'color': (props.theme === 'dark' ? '#ffffff' : '#000000')}"
-            class="checked"
+  <div class="items-check-container">
+    <div v-for="(item, index) in props.data" :key="index">
+      <button
+        @click="item.checked = !item.checked"
+        :style="{
+          'border-left-color': colorHex(item.color).op500,
+          color: props.theme === 'dark' ? '#ffffff' : '#000000',
+        }"
+        class="checked"
+      >
+        <div
+          class="checkbox"
+          :style="{
+            'background-color':
+              props.theme === 'dark' ? '#cccccc20' : '#cccccc90',
+          }"
         >
-          <div class="checkbox" :style="{'background-color': (props.theme === 'dark' ? '#cccccc20' : '#cccccc90')}">
-            <svg
-                v-if="item.checked"
-                width="15px"
-                height="15px"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2.5"
-                stroke="currentColor"
-            >
-              <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4.5 12.75l6 6 9-13.5"
-              />
-            </svg>
-          </div>
-          {{ item.label }}
-        </button>
-      </div>
+          <svg
+            v-if="item.checked"
+            width="15px"
+            height="15px"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4.5 12.75l6 6 9-13.5"
+            />
+          </svg>
+        </div>
+        {{ item.label }}
+      </button>
     </div>
+  </div>
+  <div
+      :style="{
+        '--x':
+          (atualItem.index + 1 > props.data[1].data.length / 2 ? x - 150 : x) +
+          'px',
+        '--y': y - 75 + 'px',
+        '--color-200-20': colorHex(props.data[atualItem.barIndex].color).op300 + '70',
+        '--color': colorHex(props.data[atualItem.barIndex].color).op300,
+        'color': '#000'
+      }"
+      class="tooltip"
+      v-if="atualItem.show"
+  >
+    <div class="tooltip-atribute tooltip-key">
+      {{ atualItem.key }}
+    </div>
+    <div class="tooltip-atribute">
+      {{ atualItem.value }}
+    </div>
+  </div>
 </template>
-<style scoped>
 
+<style scoped>
 .all {
   width: 100%;
   height: 500px;
@@ -369,9 +468,12 @@ function calculatePercentage(value) {
 .interval-container {
   width: 8%;
   height: 100%;
-  display: grid;
-  font-size: 12px;
   text-align: right;
+}
+
+.interval {
+  display: grid;
+  height: 97%;
 }
 
 .lines-container {
@@ -382,7 +484,10 @@ function calculatePercentage(value) {
 .line-container {
   position: absolute;
   width: 100%;
-  height: 432px;
+}
+
+.zero {
+  transform: translateY(-53px);
 }
 
 .line {
@@ -392,14 +497,21 @@ function calculatePercentage(value) {
   display: grid;
 }
 
-.first-line {
-  border-top: #737373 1px solid;
-}
-
 .line-container-setup {
-  height: 100%;
   display: grid;
   opacity: 0.5;
+  height: 390px;
+}
+
+.last-line-container {
+  display: grid;
+  width: 100%;
+  height: 42px;
+  opacity: 0.5;
+}
+
+.first-line {
+  border-top: #737373 1px solid;
 }
 
 .vertical-line {
@@ -438,6 +550,34 @@ function calculatePercentage(value) {
   width: 17px;
   height: 17px;
   border-radius: 4px;
+}
+
+.tooltip-atribute {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-left-width: 8px;
+  border-left-style: solid;
+  border-color: var(--color);
+  padding: 0.25rem 0.75rem;
+}
+
+.tooltip-key {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.tooltip {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: 150px;
+  z-index: 100;
+  overflow-y: hidden;
+  border-radius: 0.5rem;
+  background-color: var(--color-200-20);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 </style>

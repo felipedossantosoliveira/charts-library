@@ -21,8 +21,8 @@ const multiItems= reactive([
   {
     label: '2019',
     data: [
-      { value: 1093 },
-      { value: 1068 },
+      { value: 1125 },
+      { value: 1360 },
       { value: 1127 },
       { value: 1072 },
       { value: 1105 },
