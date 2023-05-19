@@ -20,7 +20,6 @@ import LineChart from 'vue-charts-library';
 export default {
   components: {
     LineChart,
-    MultiLineChart
   },
   // ...
 };
@@ -41,6 +40,8 @@ Use the library in your template:
 The Vue Chart Library supports various types of charts, including:
 
 - Line Chart
+- MultiLine Chart
+- Bar Chart
 
 ## Documentation
 

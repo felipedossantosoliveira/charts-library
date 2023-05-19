@@ -203,13 +203,13 @@ const W = (m, i) => {
         r.push(t * 40 + 40), r.push(g(d[t].value));
       let o = d.length * 40;
       return r.push(o, 130), r.join(" ");
-    }), q = f(() => {
+    }), P = f(() => {
       let r = [40, 130];
       for (let t = 0; t < d.length; t++)
         r.push(t * 40 + 40), r.push(80);
       let o = d.length * 40;
       return r.push(o, 130), r.join(" ");
-    }), P = f(() => `0 0 ${d.length * 40 + 30} 150`), M = f(() => d.length * 40);
+    }), q = f(() => `0 0 ${d.length * 40 + 30} 150`), M = f(() => d.length * 40);
     return (r, o) => (n(), s("div", {
       style: p({
         "--color": _.value.op500,
@@ -219,7 +219,7 @@ const W = (m, i) => {
     }, [
       (n(), s("svg", {
         class: "svg",
-        viewBox: P.value,
+        viewBox: q.value,
         xmlns: "http://www.w3.org/2000/svg"
       }, [
         l("text", {
@@ -331,7 +331,7 @@ const W = (m, i) => {
             attributeName: "points",
             dur: "0.3s",
             repeatCount: "1",
-            values: q.value + ";" + E.value,
+            values: P.value + ";" + E.value,
             keyTimes: "0; 1"
           }, null, 8, oe)
         ], 8, te),
@@ -400,7 +400,7 @@ const W = (m, i) => {
     ], 4));
   }
 }, Be = /* @__PURE__ */ W(de, [["__scopeId", "data-v-a7215e30"]]);
-const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he = ["x2"], ve = ["x2"], ye = ["x2"], _e = ["x2"], xe = ["x2"], ke = ["x"], me = ["x1", "x2"], be = ["points"], ge = ["values"], we = ["points"], Ce = ["values"], $e = ["cx", "cy"], Me = ["values"], ze = ["cx", "cy", "onMouseenter"], je = ["values"], Le = { class: "tooltip-atribute tooltip-key" }, Te = { class: "tooltip-atribute" }, Ee = { class: "items-check-container" }, Fe = ["onClick"], Ie = {
+const pe = (m) => (Y("data-v-3b9c0d9f"), m = m(), O(), m), fe = ["viewBox"], he = ["x2"], ve = ["x2"], ye = ["x2"], _e = ["x2"], xe = ["x2"], ke = ["x"], me = ["x1", "x2"], be = ["points"], ge = ["values"], we = ["points"], Ce = ["values"], $e = ["cx", "cy"], Me = ["values"], ze = ["cx", "cy", "onMouseenter"], je = ["values"], Le = { class: "tooltip-atribute tooltip-key" }, Te = { class: "tooltip-atribute" }, Ee = { class: "items-check-container" }, Fe = ["onClick"], Ie = {
   key: 0,
   width: "15px",
   height: "15px",
@@ -415,14 +415,9 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
   d: "M4.5 12.75l6 6 9-13.5"
 }, null, -1)), Se = [
   Ne
-], qe = {
+], Pe = {
   __name: "MultiLineChart",
   props: {
-    color: {
-      type: String,
-      required: !1,
-      default: "red"
-    },
     keys: {
       type: Array,
       required: !0
@@ -600,9 +595,7 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
         index: null,
         line: 1
       }
-    }), d = i.data, c = i.data;
-    f(() => window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    const b = f(() => {
+    }), d = i.data, c = i.data, b = f(() => {
       let o = [];
       return c.forEach((t) => {
         o.push(Math.max(...t.data.map((e) => e.value)));
@@ -638,7 +631,7 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
           t.push(a * 40 + 40), t.push(80);
         o.push({ points: t.join(" ") }), t = [];
       }), o;
-    }), q = f(() => {
+    }), P = f(() => {
       let o = [], t = [40, 130];
       return c.forEach((e) => {
         for (let y = 0; y < e.data.length; y++)
@@ -646,7 +639,7 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
         let a = e.data.length * 40;
         t.push(a, 130), o.push({ points: t.join(" "), color: _(e.color) }), t = [40, 130];
       }), o;
-    }), P = f(() => {
+    }), q = f(() => {
       let o = [], t = [40, 130];
       return c.forEach((e) => {
         for (let y = 0; y < e.data.length; y++)
@@ -760,7 +753,7 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
             class: "line_color",
             "stroke-width": "0.5"
           }, null, 8, me))), 128)),
-          (n(!0), s(x, null, k(q.value, (e, a) => (n(), s("g", null, [
+          (n(!0), s(x, null, k(P.value, (e, a) => (n(), s("g", null, [
             h(c)[a].checked ? (n(), s("polygon", {
               key: a,
               points: e.points,
@@ -774,7 +767,7 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
                 attributeName: "points",
                 dur: "0.3s",
                 repeatCount: "1",
-                values: P.value[1].points + ";" + e.points,
+                values: q.value[1].points + ";" + e.points,
                 keyTimes: "0; 1"
               }, null, 8, ge)
             ], 12, be)) : T("", !0)
@@ -824,7 +817,7 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
               cy: w(y.value),
               r: "7",
               class: "circle",
-              onMouseenter: (Pe) => I(m.keys[j].value, y.value, j, a),
+              onMouseenter: (qe) => I(m.keys[j].value, y.value, j, a),
               onMouseleave: N
             }, [
               l("animate", {
@@ -872,7 +865,7 @@ const pe = (m) => (Y("data-v-fb7c6e3d"), m = m(), O(), m), fe = ["viewBox"], he 
       ])
     ], 64));
   }
-}, Ve = /* @__PURE__ */ W(qe, [["__scopeId", "data-v-fb7c6e3d"]]);
+}, Ve = /* @__PURE__ */ W(Pe, [["__scopeId", "data-v-3b9c0d9f"]]);
 require("./style.css");
 export {
   Be as LineChart,
