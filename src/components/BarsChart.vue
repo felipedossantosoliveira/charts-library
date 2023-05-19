@@ -466,7 +466,6 @@ function calculatePercentage(value) {
 }
 
 .interval-container {
-  width: 8%;
   height: 100%;
   text-align: right;
 }
