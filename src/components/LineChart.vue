@@ -1,6 +1,5 @@
 <script setup>
 import {reactive, computed, onMounted, onUnmounted, ref} from "vue";
-import './style.css'
 
 const props = defineProps({
   color: {
