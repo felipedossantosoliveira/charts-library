@@ -3,6 +3,7 @@ import MultiLineChartExample from "./examples/MultiLineChartExample.vue";
 import { computed, ref } from "vue";
 import LineChartExample from "./examples/LineChartExample.vue";
 import BarsChartExample from "./examples/BarsChartExample.vue";
+import PieChartExample from "./examples/PieChartExample.vue";
 
 const theme = ref("dark");
 
@@ -18,39 +19,42 @@ const backgroundColor = computed(() => {
 <template>
   <div class="body" :style="{ '--color': backgroundColor }">
     <button class="button" @click="switchTheme()">toggle</button>
-    <BarsChartExample />
-    <div
-      style="
-         {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-        }
-      "
-    >
-      <div :style="{
-        display: 'flex',
-      }">
-      <div
-        :style="{
-          width: '50%',
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }"
-      >
-        <MultiLineChartExample />
-      </div>
-      <div
-        :style="{
-          width: '50%',
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }"
-      >
-        <LineChartExample />
-      </div>
-      </div>
+<!--    <BarsChartExample />-->
+<!--    <div-->
+<!--      style="-->
+<!--         {-->
+<!--          display: grid;-->
+<!--          grid-template-columns: repeat(2, 1fr);-->
+<!--        }-->
+<!--      "-->
+<!--    >-->
+<!--      <div :style="{-->
+<!--        display: 'flex',-->
+<!--      }">-->
+<!--      <div-->
+<!--        :style="{-->
+<!--          width: '50%',-->
+<!--          height: '100%',-->
+<!--          justifyContent: 'center',-->
+<!--          alignItems: 'center',-->
+<!--        }"-->
+<!--      >-->
+<!--        <MultiLineChartExample />-->
+<!--      </div>-->
+<!--      <div-->
+<!--        :style="{-->
+<!--          width: '50%',-->
+<!--          height: '100%',-->
+<!--          justifyContent: 'center',-->
+<!--          alignItems: 'center',-->
+<!--        }"-->
+<!--      >-->
+<!--        <LineChartExample />-->
+<!--      </div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <div style="width: 500px; height: 500px; margin-left: 50px">
+    <PieChartExample />
     </div>
   </div>
 </template>
