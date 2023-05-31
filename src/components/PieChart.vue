@@ -8,142 +8,7 @@ const props = defineProps({
   },
 });
 
-const colors = computed(() => {
-  return [
-    // {
-    //   op200: "#e2e8f0",
-    //   op300: "#cbd5e1",
-    //   op500: "#64748b",
-    //   op800: "#1e3d3b",
-    // },
-    // {
-    //   op200: "#e5e7eb",
-    //   op300: "#d1d5db",
-    //   op500: "#6b7280",
-    //   op800: "#1f2937",
-    // },
-    // {
-    //   op200: "#e4e4e7",
-    //   op300: "#d4d4d8",
-    //   op500: "#717179",
-    //   op800: "#27272a",
-    // },
-    // {
-    //   op200: "#e5e5e5",
-    //   op300: "#d4d4d4",
-    //   op500: "#737373",
-    //   op800: "#262626",
-    // },
-    // {
-    //   op200: "#e7e5e4",
-    //   op300: "#d6d3d1",
-    //   op500: "#78716c",
-    //   op800: "#292524",
-    // },
-    {
-      op200: "#bfdbff",
-      op300: "#93c5fd",
-      op500: "#3b82f6",
-      op800: "#1e40af",
-    },
-    {
-      op200: "#c7d2fe",
-      op300: "#a5b4fc",
-      op500: "#6366f1",
-      op800: "#3730a3",
-    },
-    {
-      op200: "#ddd6fe",
-      op300: "#c4b5fd",
-      op500: "#8b5cf6",
-      op800: "#5b21b6",
-    },
-    {
-      op200: "#e9d5ff",
-      op300: "#d8b4fe",
-      op500: "#a855f7",
-      op800: "#6b21a8",
-    },
-    {
-      op200: "#f5d0fe",
-      op300: "#f0abfc",
-      op500: "#d946ef",
-      op800: "#86198f",
-    },
-    {
-      op200: "#fbcfe8",
-      op300: "#f9a8d4",
-      op500: "#ec4899",
-      op800: "#9d174d",
-    },
-    {
-      op200: "#fecdd3",
-      op300: "#fda4af",
-      op500: "#f43f5e",
-      op800: "#9f1239",
-    },
-    {
-      op200: "#fecaca",
-      op300: "#fca5a5",
-      op500: "#ef4444",
-      op800: "#991b1b",
-    },
-    {
-      op200: "#fed7aa",
-      op300: "#fdba74",
-      op500: "#f97316",
-      op800: "#9a3412",
-    },
-    {
-      op200: "#fde68a",
-      op300: "#fcd34d",
-      op500: "#f59e0b",
-      op800: "#92400e",
-    },
-    {
-      op200: "#fef08a",
-      op300: "#fde047",
-      op500: "#e6b308",
-      op800: "#854d0e",
-    },
-    {
-      op200: "#d9f99d",
-      op300: "#bee264",
-      op500: "#84cc16",
-      op800: "#3f6212",
-    },
-    {
-      op200: "#bbf7d0",
-      op300: "#86efac",
-      op500: "#22c55e",
-      op800: "#166534",
-    },
-    {
-      op200: "#a7f3d0",
-      op300: "#6ee7b7",
-      op500: "#10b981",
-      op800: "#065f46",
-    },
-    {
-      op200: "#99f6e4",
-      op300: "#5eead4",
-      op500: "#14b8a6",
-      op800: "#115e59",
-    },
-    {
-      op200: "#a5f3fc",
-      op300: "#67e8f9",
-      op500: "#06b6d4",
-      op800: "#155e75",
-    },
-    {
-      op200: "#bae6fd",
-      op300: "#7dd3fc",
-      op500: "#0ea5e9",
-      op800: "#075985",
-    },
-  ];
-});
+const showPie = ref(true);
 
 const values = reactive({
   data: [],
@@ -165,15 +30,14 @@ const color = computed(() => {
     accumulator += item.value;
   });
   return values.data.map((item) => {
-    let hsl = (100 * item.value) / accumulator
-    accumulated += hsl
+    let hsl = (100 * item.value) / accumulator;
+    accumulated += hsl;
     return {
-      opacityTotal: 'hsla(160,'+accumulated.toFixed(0)+'%,40%,1)',
-      opacity80: 'hsla(160,'+accumulated.toFixed(0)+'%,40%,0.8)'
-    }
+      opacityTotal: "hsla(160," + accumulated.toFixed(0) + "%,40%,1)",
+      opacity80: "hsla(160," + accumulated.toFixed(0) + "%,40%,0.8)",
+    };
   });
 });
-
 
 const linePositions = computed(() => {
   let accumulator = 0;
@@ -182,10 +46,14 @@ const linePositions = computed(() => {
     accumulator += item.value;
   });
   return values.data.map((item) => {
-    let percent = (100 * item.value) / accumulator
-    let underPercent = accumulatedPercent
-    accumulatedPercent += percent
-    return {x1: (underPercent * 5) + 50,x2: (accumulatedPercent * 5) + 50, y: 30}
+    let percent = (100 * item.value) / accumulator;
+    let underPercent = accumulatedPercent;
+    accumulatedPercent += percent;
+    return {
+      x1: underPercent * 5 + 50,
+      x2: accumulatedPercent * 5 + 50,
+      y: 10,
+    };
   });
 });
 
@@ -253,6 +121,26 @@ const positions = computed(() => {
   });
 });
 
+const percents = computed(() => {
+  let percents = [];
+  let accumulator = 0;
+  values.data.forEach((item) => {
+    accumulator += item.value;
+  });
+  values.data.forEach((item) => {
+    percents.push(((item.value * 100) / accumulator).toFixed(2));
+  });
+  return percents.reverse();
+});
+
+const invertedValues = computed(() => {
+  return values.data.slice().reverse();
+});
+
+const invertedColors = computed(() => {
+  return color.value.slice().reverse();
+});
+
 const paths = computed(() => {
   let percents = [];
   let accumulator = 0;
@@ -278,45 +166,177 @@ const paths = computed(() => {
     }
   });
 });
+
 </script>
 <template>
-  <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-    <!-- <rect width="100%" height="100%" /> -->
-    <g v-for="(line, index) in linePositions" :key="index">
-      <line :x1="line.x1" :x2="line.x2" :y1="line.y" :y2="line.y" transform="translate(-1.5 0)" stroke-width="20" stroke-linecap="round" stroke="#ffffff50"/>
-      <line :x1="line.x1" :x2="line.x2" :y1="line.y" :y2="line.y" stroke-width="20" stroke-linecap="round" :stroke="color[index].opacityTotal"/>
-    </g>
-    <!-- <circle cx="50" cy="30" r="10" :fill="color[0]" /> -->
-    <!-- <path d="M 50 20 C 35 20 35 40 50 40 Z" stroke-width="0" :fill="color[0]" /> -->
-    <g
-      v-for="(value, index) in paths"
-      :key="index"
-      :transform="`rotate(270 300 300)`"
+  <div @click="showPie = !showPie" style="color: white">toogle</div>
+  <div class="container">
+    <svg v-if="showPie === false" viewBox="0 0 600 20">
+      <g v-for="(line, index) in linePositions" :key="index">
+        <line
+          :x1="line.x1"
+          :x2="line.x2"
+          :y1="line.y"
+          :y2="line.y"
+          transform="translate(-1.5 0)"
+          stroke-width="20"
+          stroke-linecap="round"
+          stroke="#ffffff50"
+        />
+        <line
+          :x1="line.x1"
+          :x2="line.x2"
+          :y1="line.y"
+          :y2="line.y"
+          stroke-width="20"
+          stroke-linecap="round"
+          :stroke="color[index].opacityTotal"
+        />
+      </g>
+    </svg>
+    <div class="table-container">
+      <table v-if="showPie === false" class="table">
+        <tr>
+          <th class="key">CHAVE</th>
+          <th class="value">VALOR</th>
+        </tr>
+        <tr v-for="(value, index) in invertedValues" :key="index">
+          <td class="key">
+            <svg width="5px" height="5px" viewBox="0 0 10 10">
+              <rect
+                width="100%"
+                height="100%"
+                :fill="invertedColors[index].opacityTotal"
+              />
+            </svg>
+            <span style="margin-left: 20px">{{ value.key }}</span>
+          </td>
+          <td class="value">
+            {{ value.value
+            }}<span
+              style="margin-left: 10px; color: #737373; font-weight: normal"
+              >({{ percents[index] }}%)</span
+            >
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <svg
+      v-if="showPie"
+      viewBox="0 0 600 600"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        :d="value"
-        stroke="#ffffff50"
-        :fill="color[index].opacity80"
-        stroke-width="1.5"
-        @mouseenter="
-          () => {
-            hoverIndex = index;
-          }
-        "
-        @mouseleave="
-          () => {
-            hoverIndex = -1;
-          }
-        "
-        :transform="[
-          hoverIndex === index
-            ? `translate(${
-                halfPositionsDislocated[index].x - halfPositions[index].x
-              } ${halfPositionsDislocated[index].y - halfPositions[index].y})`
-            : '',
-        ]"
-      />
-    </g>
-  </svg>
+      <!-- <rect width="100%" height="100%" /> -->
+
+      <!-- <circle cx="50" cy="30" r="10" :fill="color[0]" /> -->
+      <!-- <path d="M 50 20 C 35 20 35 40 50 40 Z" stroke-width="0" :fill="color[0]" /> -->
+      <g
+        v-for="(value, index) in paths"
+        :key="index"
+        :transform="`rotate(270 300 300)`"
+      >
+        <transition
+
+        >
+        <path
+          id="path"
+          :d="value"
+          stroke="#ffffff50"
+          :fill="color[index].opacity80"
+          stroke-width="1.5"
+          @mouseenter="
+            () => {
+              hoverIndex = index;
+            }
+          "
+          @mouseleave="
+            () => {
+              hoverIndex = -1;
+            }
+          "
+          :transform="[
+            hoverIndex === index
+              ? `translate(${
+                  halfPositionsDislocated[index].x - halfPositions[index].x
+                } ${halfPositionsDislocated[index].y - halfPositions[index].y})`
+              : '',
+          ]"
+/>
+        </transition>
+      </g>
+    </svg>
+  </div>
 </template>
-<style scoped></style>
+<style scoped>
+.container {
+  //background-color: red;
+}
+
+@keyframes animarPath {
+  0% {
+    stroke-dashoffset: 1000;
+    fill-opacity: 0;
+    width: 0;
+    //transform: translate(30px, 0)
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: 100%;
+    width: 100%;
+    //transform: translate(0, 0)
+  }
+}
+
+#path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  fill-opacity: 100%;
+  animation: animarPath 1s linear forwards;
+  animation-iteration-count: 1;
+}
+
+.table {
+  color: #e5e7eb;
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.table,
+td {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #73737335;
+  font-size: 10pt;
+}
+
+.table th {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #737373;
+  font-size: 8pt;
+  text-align: left;
+  border-bottom: 1px solid #73737335;
+  font-weight: bold;
+}
+
+.table .key {
+  text-align: left;
+}
+
+.table .value {
+  text-align: right;
+  font-weight: 600;
+}
+
+tr .key {
+  display: flex;
+  align-items: center;
+}
+</style>

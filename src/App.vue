@@ -19,46 +19,56 @@ const backgroundColor = computed(() => {
 <template>
   <div class="body" :style="{ '--color': backgroundColor }">
     <button class="button" @click="switchTheme()">toggle</button>
-<!--    <BarsChartExample />-->
-<!--    <div-->
-<!--      style="-->
-<!--         {-->
-<!--          display: grid;-->
-<!--          grid-template-columns: repeat(2, 1fr);-->
-<!--        }-->
-<!--      "-->
-<!--    >-->
-<!--      <div :style="{-->
-<!--        display: 'flex',-->
-<!--      }">-->
-<!--      <div-->
-<!--        :style="{-->
-<!--          width: '50%',-->
-<!--          height: '100%',-->
-<!--          justifyContent: 'center',-->
-<!--          alignItems: 'center',-->
-<!--        }"-->
-<!--      >-->
-<!--        <MultiLineChartExample />-->
-<!--      </div>-->
-<!--      <div-->
-<!--        :style="{-->
-<!--          width: '50%',-->
-<!--          height: '100%',-->
-<!--          justifyContent: 'center',-->
-<!--          alignItems: 'center',-->
-<!--        }"-->
-<!--      >-->
-<!--        <LineChartExample />-->
-<!--      </div>-->
-<!--      </div>-->
-<!--    </div>-->
-    <div style="width: 500px; height: 500px; margin-left: 50px">
+    <BarsChartExample />
+    <div
+      style="
+         {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      "
+    >
+      <div :style="{
+        display: 'flex',
+      }">
+      <div
+        :style="{
+          width: '50%',
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }"
+      >
+        <MultiLineChartExample />
+      </div>
+      <div
+        :style="{
+          width: '50%',
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }"
+      >
+        <LineChartExample />
+      </div>
+      </div>
+      <div class="pie">
     <PieChartExample />
+      </div>
+      <div>
+
+      </div>
     </div>
   </div>
 </template>
 <style>
+.pie {
+  margin-top: 30px;
+  width: 50%;
+  height: 100%;
+  max-height: 600px;
+  overflow: auto;
+}
 .button {
   margin-bottom: 100px;
   border: 0;
