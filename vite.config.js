@@ -6,6 +6,10 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 export default defineConfig({
   plugins: [vue(),
     cssInjectedByJsPlugin()],
+  server: {
+    host: true,
+    port: 5550, // This is the port which we will use in docker
+  },
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points
