@@ -52,8 +52,8 @@ const backgroundColor = computed(() => {
         <LineChartExample />
       </div>
       </div>
-      <div class="pie">
-    <PieChartExample />
+      <div class="pai-do-pie">
+            <PieChartExample />
       </div>
       <div>
 
@@ -62,12 +62,8 @@ const backgroundColor = computed(() => {
   </div>
 </template>
 <style>
-.pie {
-  margin-top: 30px;
+.pai-do-pie{
   width: 50%;
-  height: 100%;
-  max-height: 600px;
-  overflow: auto;
 }
 .button {
   margin-bottom: 100px;

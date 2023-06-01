@@ -30,8 +30,4 @@ const values = reactive([
     </div>
 </template>
 <style scoped>
-.container {
-  //width: 300px;
-}
-
 </style>
